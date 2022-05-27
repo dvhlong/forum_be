@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import com.dvhl.forum_be.model.User;
 import com.dvhl.forum_be.model.UserDTO;
-import com.dvhl.forum_be.Security.JwtResponse;
-import com.dvhl.forum_be.Security.JwtUtils;
-import com.dvhl.forum_be.Security.LoginRequest;
-import com.dvhl.forum_be.Security.UserDetailsImpl;
 import com.dvhl.forum_be.model.Response;
 import com.dvhl.forum_be.model.Role;
 import com.dvhl.forum_be.model.RoleDTO;
 import com.dvhl.forum_be.repositories.AccountRepository;
 import com.dvhl.forum_be.repositories.RoleRepository;
+import com.dvhl.forum_be.security.JwtResponse;
+import com.dvhl.forum_be.security.JwtUtils;
+import com.dvhl.forum_be.security.LoginRequest;
+import com.dvhl.forum_be.security.UserDetailsImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
