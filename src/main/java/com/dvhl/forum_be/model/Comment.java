@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-// import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -58,24 +62,6 @@ public class Comment {
     @Column(name = "deleted_at")
     private Timestamp deletedat;
 
-    public Comment() {
-    }
-
-    public Comment(Post post, String content, boolean isdeleted, Comment replied_cmt, User created_acc,
-            Timestamp created_at, User updated_acc, Timestamp updated_at, User deleted_acc,
-            Timestamp deleted_at) {
-        this.post = post;
-        this.content = content;
-        this.isdeleted = isdeleted;
-        this.repliedcmt = replied_cmt;
-        this.createdacc = created_acc;
-        this.createdat = created_at;
-        this.updatedacc = updated_acc;
-        this.updatedat = updated_at;
-        this.deletedacc = deleted_acc;
-        this.deletedat = deleted_at;
-    }
-
     public boolean isIsdeleted() {
         return isdeleted;
     }
@@ -108,60 +94,60 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment getReplied_cmt() {
+    public Comment getRepliedcmt() {
         return repliedcmt;
     }
 
-    public void setReplied_cmt(Comment replied_cmt) {
-        this.repliedcmt = replied_cmt;
+    public void setRepliedcmt(Comment repliedcmt) {
+        this.repliedcmt = repliedcmt;
     }
 
-    public User getCreated_acc() {
+    public User getCreatedacc() {
         return createdacc;
     }
 
-    public void setCreated_acc(User created_acc) {
-        this.createdacc = created_acc;
+    public void setCreatedacc(User createdacc) {
+        this.createdacc = createdacc;
     }
 
-    public Timestamp getCreated_at() {
+    public Timestamp getCreatedat() {
         return createdat;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.createdat = created_at;
+    public void setCreatedat(Timestamp createdat) {
+        this.createdat = createdat;
     }
 
-    public User getUpdated_acc() {
+    public User getUpdatedacc() {
         return updatedacc;
     }
 
-    public void setUpdated_acc(User updated_acc) {
-        this.updatedacc = updated_acc;
+    public void setUpdatedacc(User updatedacc) {
+        this.updatedacc = updatedacc;
     }
 
-    public Timestamp getUpdated_at() {
+    public Timestamp getUpdatedat() {
         return updatedat;
     }
 
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updatedat = updated_at;
+    public void setUpdatedat(Timestamp updatedat) {
+        this.updatedat = updatedat;
     }
 
-    public User getDeleted_acc() {
+    public User getDeletedacc() {
         return deletedacc;
     }
 
-    public void setDeleted_acc(User deleted_acc) {
-        this.deletedacc = deleted_acc;
+    public void setDeletedacc(User deletedacc) {
+        this.deletedacc = deletedacc;
     }
 
-    public Timestamp getDeleted_at() {
+    public Timestamp getDeletedat() {
         return deletedat;
     }
 
-    public void setDeleted_at(Timestamp deleted_at) {
-        this.deletedat = deleted_at;
+    public void setDeletedat(Timestamp deletedat) {
+        this.deletedat = deletedat;
     }
 
 }
