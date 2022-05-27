@@ -13,6 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "post")
 public class Post {
@@ -69,29 +74,6 @@ public class Post {
     @JsonIgnore
     @Column(name = "approved_at")
     private Timestamp approvedat;
-
-    public Post(long id, String title, String content, long view, boolean isdeleted, boolean isapproved, Topic topic,
-            User createdacc, Timestamp createdat, User updatedacc, Timestamp updatedat, User deletedacc,
-            Timestamp deletedat, User approvedacc, Timestamp approvedat) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.view = view;
-        this.isdeleted = isdeleted;
-        this.isapproved = isapproved;
-        this.topic = topic;
-        this.createdacc = createdacc;
-        this.createdat = createdat;
-        this.updatedacc = updatedacc;
-        this.updatedat = updatedat;
-        this.deletedacc = deletedacc;
-        this.deletedat = deletedat;
-        this.approvedacc = approvedacc;
-        this.approvedat = approvedat;
-    }
-
-    public Post() {
-    }
 
     public boolean isIsapproved() {
         return isapproved;
