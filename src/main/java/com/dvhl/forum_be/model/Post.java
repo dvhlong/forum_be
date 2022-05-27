@@ -13,11 +13,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "post")
 public class Post {
@@ -75,6 +70,28 @@ public class Post {
     @Column(name = "approved_at")
     private Timestamp approvedat;
 
+    public Post() {
+    }
+
+    public Post(String title, String content, long view, boolean isdeleted, boolean isapproved, Topic topic,
+            User createdacc, Timestamp createdat, User updatedacc, Timestamp updatedat, User deletedacc,
+            Timestamp deletedat, User approvedacc, Timestamp approvedat) {
+        this.title = title;
+        this.content = content;
+        this.view = view;
+        this.isdeleted = isdeleted;
+        this.isapproved = isapproved;
+        this.topic = topic;
+        this.createdacc = createdacc;
+        this.createdat = createdat;
+        this.updatedacc = updatedacc;
+        this.updatedat = updatedat;
+        this.deletedacc = deletedacc;
+        this.deletedat = deletedat;
+        this.approvedacc = approvedacc;
+        this.approvedat = approvedat;
+    }
+
     public boolean isIsapproved() {
         return isapproved;
     }
@@ -131,68 +148,68 @@ public class Post {
         this.topic = topic;
     }
 
-    public User getCreatedacc() {
+    public User getCreated_acc() {
         return createdacc;
     }
 
-    public void setCreatedacc(User createdacc) {
-        this.createdacc = createdacc;
+    public void setCreated_acc(User created_acc) {
+        this.createdacc = created_acc;
     }
 
-    public Timestamp getCreatedat() {
+    public Timestamp getCreated_at() {
         return createdat;
     }
 
-    public void setCreatedat(Timestamp createdat) {
-        this.createdat = createdat;
+    public void setCreated_at(Timestamp created_at) {
+        this.createdat = created_at;
     }
 
-    public User getUpdatedacc() {
+    public User getUpdated_acc() {
         return updatedacc;
     }
 
-    public void setUpdatedacc(User updatedacc) {
-        this.updatedacc = updatedacc;
+    public void setUpdated_acc(User updated_acc) {
+        this.updatedacc = updated_acc;
     }
 
-    public Timestamp getUpdatedat() {
+    public Timestamp getUpdated_at() {
         return updatedat;
     }
 
-    public void setUpdatedat(Timestamp updatedat) {
-        this.updatedat = updatedat;
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updatedat = updated_at;
     }
 
-    public User getDeletedacc() {
+    public User getDeleted_acc() {
         return deletedacc;
     }
 
-    public void setDeletedacc(User deletedacc) {
-        this.deletedacc = deletedacc;
+    public void setDeleted_acc(User deleted_acc) {
+        this.deletedacc = deleted_acc;
     }
 
-    public Timestamp getDeletedat() {
+    public Timestamp getDeleted_at() {
         return deletedat;
     }
 
-    public void setDeletedat(Timestamp deletedat) {
-        this.deletedat = deletedat;
+    public void setDeleted_at(Timestamp deleted_at) {
+        this.deletedat = deleted_at;
     }
 
-    public User getApprovedacc() {
+    public User getApproved_acc() {
         return approvedacc;
     }
 
-    public void setApprovedacc(User approvedacc) {
-        this.approvedacc = approvedacc;
+    public void setApproved_acc(User approved_acc) {
+        this.approvedacc = approved_acc;
     }
 
-    public Timestamp getApprovedat() {
+    public Timestamp getApproved_at() {
         return approvedat;
     }
 
-    public void setApprovedat(Timestamp approvedat) {
-        this.approvedat = approvedat;
+    public void setApproved_at(Timestamp approved_at) {
+        this.approvedat = approved_at;
     }
 
 }

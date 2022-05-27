@@ -16,8 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class User {
@@ -56,6 +54,26 @@ public class User {
 
     @JsonIgnore
     private Timestamp updatedat;
+
+    public User(long id, String username, String password, Role role, boolean isblocked, String name, String email,
+            String phone, Date birthdate, String avatar, String avatarUrl, Timestamp createdat, Timestamp updatedat) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.isblocked = isblocked;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.birthdate = birthdate;
+        this.avatar = avatar;
+        this.avatarUrl = avatarUrl;
+        this.createdat = createdat;
+        this.updatedat = updatedat;
+    }
+
+    public User() {
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;

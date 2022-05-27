@@ -48,9 +48,9 @@ public class CommentService {
             Comment newComment) {
         Optional<User> uOptional = accountRepository.findById(createdUserId);
         Optional<Post> pOptional = postRepository.findById(postId);
-        newComment.setCreatedacc(uOptional.get());
+        newComment.setCreated_acc(uOptional.get());
         newComment.setPost(pOptional.get());
-        newComment.setCreatedat(timeService.getCurrentTimestamp());
+        newComment.setCreated_at(timeService.getCurrentTimestamp());
         notifyWhenComment(postId, createdUserId, repliedCommentId, newComment, pOptional);
         commentRepository.save(newComment);
         return ResponseEntity.status(HttpStatus.OK).body(new Response("OK", "Added", ""));
@@ -60,11 +60,11 @@ public class CommentService {
             Optional<Post> pOptional) {
         if (isReply(repliedCommentId)) {
             Optional<Comment> repliedCommentOptional = commentRepository.findById(repliedCommentId);
-            newComment.setRepliedcmt(repliedCommentOptional.get());
-            notificationService.insertNotification(createdUserId, repliedCommentOptional.get().getCreatedacc().getId(),
+            newComment.setReplied_cmt(repliedCommentOptional.get());
+            notificationService.insertNotification(createdUserId, repliedCommentOptional.get().getCreated_acc().getId(),
                     postId, "replied your comment in post");
         } else {
-            notificationService.insertNotification(createdUserId, pOptional.get().getCreatedacc().getId(), postId,
+            notificationService.insertNotification(createdUserId, pOptional.get().getCreated_acc().getId(), postId,
                     "commented to your post");
         }
     }
@@ -77,8 +77,8 @@ public class CommentService {
         Optional<User> uOptional = accountRepository.findById(updatedUserId);
         commentRepository.findById(commentId).map(comment -> {
             comment.setContent(updatedComment.getContent());
-            comment.setUpdatedacc(uOptional.get());
-            comment.setUpdatedat(timeService.getCurrentTimestamp());
+            comment.setUpdated_acc(uOptional.get());
+            comment.setUpdated_at(timeService.getCurrentTimestamp());
             return commentRepository.save(comment);
         });
         return ResponseEntity.status(HttpStatus.OK).body(new Response("Ok", "Updated", ""));
@@ -88,8 +88,8 @@ public class CommentService {
         Optional<User> uOptional = accountRepository.findById(deletedUserId);
         commentRepository.findById(commentId).map(comment -> {
             comment.setIsdeleted(true);
-            comment.setDeletedacc(uOptional.get());
-            comment.setDeletedat(timeService.getCurrentTimestamp());
+            comment.setDeleted_acc(uOptional.get());
+            comment.setDeleted_at(timeService.getCurrentTimestamp());
             return commentRepository.save(comment);
         });
         return ResponseEntity.status(HttpStatus.OK).body(new Response("OK", "Deleted", ""));
@@ -102,8 +102,8 @@ public class CommentService {
         Timestamp timeDelete = timeService.getCurrentTimestamp();
         for (Comment comment : comments) {
             comment.setIsdeleted(true);
-            comment.setDeletedacc(uOptional.get());
-            comment.setDeletedat(timeDelete);
+            comment.setDeleted_acc(uOptional.get());
+            comment.setDeleted_at(timeDelete);
             commentRepository.save(comment);
         }
     }

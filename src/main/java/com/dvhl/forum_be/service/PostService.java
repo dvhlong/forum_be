@@ -84,9 +84,9 @@ public class PostService {
         if (!uOptional.get().getRole().getRolename().equals("user")) {
             newPost.setIsapproved(true);
         }
-        newPost.setCreatedacc(uOptional.get());
+        newPost.setCreated_acc(uOptional.get());
         newPost.setTopic(tOptional.get());
-        newPost.setCreatedat(timeService.getCurrentTimestamp());
+        newPost.setCreated_at(timeService.getCurrentTimestamp());
         tOptional.map(topic -> {
             topic.setAmountTopic(topic.getAmountTopic() + 1);
             return topicRepository.save(topic);
@@ -99,9 +99,9 @@ public class PostService {
         Optional<User> uOptional = accountRepository.findById(approvedUserId);
         postRepository.findById(postId).map(post -> {
             post.setIsapproved(true);
-            post.setApprovedacc(uOptional.get());
-            post.setApprovedat(timeService.getCurrentTimestamp());
-            notificationService.insertNotification(approvedUserId, post.getCreatedacc().getId(), postId,
+            post.setApproved_acc(uOptional.get());
+            post.setApproved_at(timeService.getCurrentTimestamp());
+            notificationService.insertNotification(approvedUserId, post.getCreated_acc().getId(), postId,
                     "approved your post");
             return postRepository.save(post);
         });
@@ -117,8 +117,8 @@ public class PostService {
             if (updatedPost.getContent() != null)
                 post.setContent(updatedPost.getContent());
             post.setTopic(tOptional.get());
-            post.setUpdatedacc(uOptional.get());
-            post.setUpdatedat(timeService.getCurrentTimestamp());
+            post.setUpdated_acc(uOptional.get());
+            post.setUpdated_at(timeService.getCurrentTimestamp());
             return postRepository.save(post);
         });
         return ResponseEntity.status(HttpStatus.OK).body(new Response("OK", "Updated", ""));
@@ -127,9 +127,9 @@ public class PostService {
     public ResponseEntity<Response> deletePost(long postId, long deletedUserId) {
         Optional<User> uOptional = accountRepository.findById(deletedUserId);
         Optional<Post> pOptional = postRepository.findById(postId).map(post -> {
-            post.setDeletedacc(uOptional.get());
+            post.setDeleted_acc(uOptional.get());
             post.setIsdeleted(true);
-            post.setDeletedat(timeService.getCurrentTimestamp());
+            post.setDeleted_at(timeService.getCurrentTimestamp());
             return postRepository.save(post);
         });
         // commentService.deleteCommentWhenDeletePost(post_id, deleted_acc);
@@ -143,8 +143,8 @@ public class PostService {
         Timestamp timeDelete = timeService.getCurrentTimestamp();
         if (posts.size() > 0)
             for (Post post : posts) {
-                post.setDeletedacc(uOptional.get());
-                post.setDeletedat(timeDelete);
+                post.setDeleted_acc(uOptional.get());
+                post.setDeleted_at(timeDelete);
                 post.setIsdeleted(true);
                 postRepository.save(post);
             }
