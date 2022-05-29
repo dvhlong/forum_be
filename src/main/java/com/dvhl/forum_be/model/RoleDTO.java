@@ -1,15 +1,18 @@
 package com.dvhl.forum_be.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoleDTO {
 
     private long id;
 
     private String rolename;
+
+    public RoleDTO() {
+    }
+
+    public RoleDTO(long id, String rolename) {
+        this.id = id;
+        this.rolename = rolename;
+    }
 
     public long getId() {
         return id;
