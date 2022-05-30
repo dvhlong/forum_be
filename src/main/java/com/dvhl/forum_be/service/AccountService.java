@@ -205,8 +205,8 @@ public class AccountService {
                                 File file = googleDrive.files().create(newGGDriveFile, mediaContent)
                                         .setFields("id,webViewLink")
                                         .execute();
-                                user.setAvatar(file.getId());
-                                user.setAvatarUrl(file.getWebViewLink());
+                                // user.setAvatar(file.getId());
+                                System.out.println(file.getWebContentLink());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

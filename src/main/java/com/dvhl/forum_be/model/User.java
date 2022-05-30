@@ -43,7 +43,7 @@ public class User {
 
     private String avatar;
 
-    @Column(columnDefinition = "varchar(255) default 'https://drive.google.com/file/d/1cIgmNNzJVnsunnlDmhft52zhGL8YN8q_/view?usp=sharing'")
+    @Column(columnDefinition = "varchar(255) default 'https://drive.google.com/uc?export=view&id=1cIgmNNzJVnsunnlDmhft52zhGL8YN8q_'")
     private String avatarUrl;
 
     @JsonIgnore
