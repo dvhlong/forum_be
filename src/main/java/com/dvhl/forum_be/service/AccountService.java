@@ -198,15 +198,20 @@ public class AccountService {
                             FileContent mediaContent = new FileContent("image/jpeg", newfileRename);
                             File newGGDriveFile = new File();
                             newGGDriveFile.setName(fileRename);
+                            newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                             if (user.getAvatar() != null) {
-                                googleDrive.files().update(user.getAvatar(), newGGDriveFile, mediaContent);
-                            } else {
-                                newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
+                                googleDrive.files().delete(user.getAvatar());
                                 File file = googleDrive.files().create(newGGDriveFile, mediaContent)
-                                        .setFields("id,webContentLink")
+                                        .setFields("id")
                                         .execute();
-                                // user.setAvatar(file.getId());
-                                System.out.println(file.getWebContentLink());
+                                user.setAvatar(file.getId());
+                                user.setAvatarUrl("https://drive.google.com/uc?export=view&id=" + file.getId());
+                            } else {
+                                File file = googleDrive.files().create(newGGDriveFile, mediaContent)
+                                        .setFields("id")
+                                        .execute();
+                                user.setAvatar(file.getId());
+                                user.setAvatarUrl("https://drive.google.com/uc?export=view&id=" + file.getId());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
