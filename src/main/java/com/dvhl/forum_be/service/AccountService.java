@@ -189,6 +189,12 @@ public class AccountService {
                         // insertAvatarToDatabase(fileRename, user);
                         // storageService.save(file, fileRename);
                         File newGGDriveFile = new File();
+                        try {
+                            googleDrive.files().delete("13Gc7WCiGWrRpT4DfY5I0_9V_WAacpHIt").execute();
+                        } catch (IOException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
                         newGGDriveFile.setName(fileRename);
                         newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                         java.io.File newfileRename = new java.io.File(fileRename);
