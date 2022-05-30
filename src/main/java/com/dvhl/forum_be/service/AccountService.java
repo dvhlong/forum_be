@@ -203,7 +203,7 @@ public class AccountService {
                             } else {
                                 newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                                 File file = googleDrive.files().create(newGGDriveFile, mediaContent)
-                                        .setFields("id,webViewLink")
+                                        .setFields("id,webContentLink")
                                         .execute();
                                 // user.setAvatar(file.getId());
                                 System.out.println(file.getWebContentLink());
