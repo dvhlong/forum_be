@@ -6,12 +6,14 @@ public class RoleDTO {
 
     private String rolename;
 
+    private String imageUrl;
+
     public RoleDTO() {
     }
 
-    public RoleDTO(long id, String rolename) {
-        this.id = id;
+    public RoleDTO(String rolename, String imageUrl) {
         this.rolename = rolename;
+        this.imageUrl = imageUrl;
     }
 
     public long getId() {
@@ -28,6 +30,14 @@ public class RoleDTO {
 
     public void setRolename(String rolename) {
         this.rolename = rolename;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
 }

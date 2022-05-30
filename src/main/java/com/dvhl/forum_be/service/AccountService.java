@@ -186,26 +186,28 @@ public class AccountService {
                 Optional<User> userOptional = accountRepository.findById(userId);
                 if (userOptional.isPresent()) {
                     userOptional.ifPresent(user -> {
+
+                        // Store to local (not used)
                         // insertAvatarToDatabase(fileRename, user);
                         // storageService.save(file, fileRename);
-                        File newGGDriveFile = new File();
-                        try {
-                            googleDrive.files().delete("13Gc7WCiGWrRpT4DfY5I0_9V_WAacpHIt").execute();
-                        } catch (IOException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
-                        }
-                        newGGDriveFile.setName(fileRename);
-                        newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
+
+                        // Store to google drive (now)
                         java.io.File newfileRename = new java.io.File(fileRename);
                         try {
                             FileCopyUtils.copy(newFile.getBytes(), newfileRename);
                             FileContent mediaContent = new FileContent("image/jpeg", newfileRename);
-                            File file = googleDrive.files().create(newGGDriveFile, mediaContent)
-                                    .setFields("id,webViewLink")
-                                    .execute();
-                            System.out.println(file.getId());
-                            System.out.println(file.getWebViewLink());
+                            File newGGDriveFile = new File();
+                            newGGDriveFile.setName(fileRename);
+                            if (user.getAvatar() != null) {
+                                googleDrive.files().update(user.getAvatar(), newGGDriveFile, mediaContent);
+                            } else {
+                                newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
+                                File file = googleDrive.files().create(newGGDriveFile, mediaContent)
+                                        .setFields("id,webViewLink")
+                                        .execute();
+                                user.setAvatar(file.getId());
+                                user.setAvatarUrl(file.getWebViewLink());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                             throw new NullPointerException();
