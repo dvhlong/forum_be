@@ -1,6 +1,7 @@
 package com.dvhl.forum_be.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import com.dvhl.forum_be.security.UserDetailsImpl;
 import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
+import com.google.common.collect.ImmutableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -188,12 +190,12 @@ public class AccountService {
                         // storageService.save(file, fileRename);
                         File newGGDriveFile = new File();
                         newGGDriveFile.setName(fileRename);
-                        newGGDriveFile.setMimeType("application/vnd.google-apps.folder");
+                        newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                         java.io.File newfileRename = new java.io.File(fileRename);
                         try {
                             FileCopyUtils.copy(newFile.getBytes(), newfileRename);
                             FileContent mediaContent = new FileContent("image/jpeg", newfileRename);
-                            File file = googleDrive.files().create(newGGDriveFile)
+                            File file = googleDrive.files().create(newGGDriveFile, mediaContent)
                                     .setFields("id,webViewLink")
                                     .execute();
                             System.out.println(file.getId());
