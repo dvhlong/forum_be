@@ -38,7 +38,7 @@ public class GoogleDriveConfig {
         return new GoogleCredential.Builder()
                 .setTransport(httpTransport)
                 .setJsonFactory(jsonFactory)
-                .setServiceAccountId("sorais599-forum@forum-349604.iam.gserviceaccount.com")
+                .setServiceAccountId("long59915@gmail.com")
                 .setServiceAccountScopes(elenco)
                 .setServiceAccountPrivateKeyFromP12File(new File("src/main/resources/forum-349604-bcf211c5d556.p12"))
                 .build();
