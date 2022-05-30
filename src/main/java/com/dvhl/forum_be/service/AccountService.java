@@ -198,11 +198,10 @@ public class AccountService {
                             FileContent mediaContent = new FileContent("image/jpeg", newfileRename);
                             File newGGDriveFile = new File();
                             newGGDriveFile.setName(fileRename);
-                            // newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
+                            newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                             if (user.getAvatar() != null) {
-                                // googleDrive.files().delete(user.getAvatar()).execute();
-                                // upload(user, mediaContent, newGGDriveFile);
-                                googleDrive.files().update(user.getAvatar(), newGGDriveFile, mediaContent).execute();
+                                googleDrive.files().delete(user.getAvatar()).execute();
+                                upload(user, mediaContent, newGGDriveFile);
                             } else {
                                 upload(user, mediaContent, newGGDriveFile);
                             }
