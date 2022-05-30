@@ -1,5 +1,6 @@
 package com.dvhl.forum_be.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,9 @@ import com.dvhl.forum_be.security.JwtResponse;
 import com.dvhl.forum_be.security.JwtUtils;
 import com.dvhl.forum_be.security.LoginRequest;
 import com.dvhl.forum_be.security.UserDetailsImpl;
+import com.google.api.client.http.FileContent;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -28,6 +32,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -57,6 +62,9 @@ public class AccountService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private Drive googleDrive;
 
     public List<Role> getRoles() {
         return roleRepository.findAll();
@@ -167,21 +175,36 @@ public class AccountService {
         return ResponseEntity.status(HttpStatus.OK).body(new Response("OK", "OK", accountRepository.findById(userId)));
     }
 
-    public ResponseEntity<Response> uploadAvatar(MultipartFile file, long userId) {
+    public ResponseEntity<Response> uploadAvatar(MultipartFile newFile, long userId) {
         try {
-            String filename = file.getOriginalFilename();
+            String filename = newFile.getOriginalFilename();
             if (filename != null) {
                 String fileRename = userId + "."
                         + filename.substring(filename.lastIndexOf(".") + 1);
                 Optional<User> userOptional = accountRepository.findById(userId);
                 if (userOptional.isPresent()) {
                     userOptional.ifPresent(user -> {
-                        insertAvatarToDatabase(fileRename, user);
-                        storageService.save(file, fileRename);
+                        // insertAvatarToDatabase(fileRename, user);
+                        // storageService.save(file, fileRename);
+                        File newGGDriveFile = new File();
+                        newGGDriveFile.setName(fileRename);
+                        java.io.File newfileRename = new java.io.File(fileRename);
+                        try {
+                            FileCopyUtils.copy(newFile.getBytes(), newfileRename);
+                            FileContent mediaContent = new FileContent("image/jpeg", newfileRename);
+                            File file = googleDrive.files().create(newGGDriveFile, mediaContent)
+                                    .setFields("id,webViewLink")
+                                    .execute();
+                            System.out.println(file.getId());
+                            System.out.println(file.getWebViewLink());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            throw new NullPointerException();
+                        }
                         accountRepository.save(user);
                     });
                     return ResponseEntity.status(HttpStatus.OK)
-                            .body(new Response("OK", "Successful", "Uploaded the file successfully: " + fileRename));
+                            .body(new Response("OK", "Successful", "Uploaded the file successfully: " + ""));
                 } else {
                     return ResponseEntity.status(HttpStatus.OK)
                             .body(new Response("Fail", "Error", "Could not upload the file !"));
