@@ -200,7 +200,7 @@ public class AccountService {
                             newGGDriveFile.setName(fileRename);
                             newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                             if (user.getAvatar() != null) {
-                                googleDrive.files().delete(user.getAvatar());
+                                googleDrive.files().delete(user.getAvatar()).execute();
                                 File file = googleDrive.files().create(newGGDriveFile, mediaContent)
                                         .setFields("id")
                                         .execute();
