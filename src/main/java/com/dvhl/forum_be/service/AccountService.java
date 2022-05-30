@@ -201,17 +201,9 @@ public class AccountService {
                             newGGDriveFile.setParents(ImmutableList.of("1nHgSB-J0xYvQJS8awH9EWakjX5vU-RYm"));
                             if (user.getAvatar() != null) {
                                 googleDrive.files().delete(user.getAvatar()).execute();
-                                File file = googleDrive.files().create(newGGDriveFile, mediaContent)
-                                        .setFields("id")
-                                        .execute();
-                                user.setAvatar(file.getId());
-                                user.setAvatarUrl("https://drive.google.com/uc?export=view&id=" + file.getId());
+                                upload(user, mediaContent, newGGDriveFile);
                             } else {
-                                File file = googleDrive.files().create(newGGDriveFile, mediaContent)
-                                        .setFields("id")
-                                        .execute();
-                                user.setAvatar(file.getId());
-                                user.setAvatarUrl("https://drive.google.com/uc?export=view&id=" + file.getId());
+                                upload(user, mediaContent, newGGDriveFile);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -233,6 +225,14 @@ public class AccountService {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new Response("Fail", "Error", "Could not upload the file !"));
         }
+    }
+
+    private void upload(User user, FileContent mediaContent, File newGGDriveFile) throws IOException {
+        File file = googleDrive.files().create(newGGDriveFile, mediaContent)
+                .setFields("id")
+                .execute();
+        user.setAvatar(file.getId());
+        user.setAvatarUrl("https://drive.google.com/uc?export=view&id=" + file.getId());
     }
 
     private void insertAvatarToDatabase(String fileRename, User user) {
